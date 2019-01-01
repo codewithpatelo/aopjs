@@ -1,5 +1,3 @@
-<img src="./logo2.png" width="232" align="middle" > 
-
 # Neutrosophic agent-oriented approach to assist rural commuter’s decision-making in Ethiopia.
 [![Build Status](https://travis-ci.org/patelotech/aopjs.svg?branch=master)](https://travis-ci.org/patelotech/aopjs)
 [![license](https://img.shields.io/badge/license-GNUv3-blue.svg)](https://github.com/patelotech/aopifyjs/blob/master/LICENSE.md) 
