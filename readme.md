@@ -47,7 +47,7 @@ GNU v3
 
 ## What is ENPOV?
 
-<img src="./logo.png" width="232" align="middle" > 
+<img src="./logo2.png" width="232" align="middle" > 
 
 Enpov is an Ethiopian UN-awarded social enterprise endorsed by the African Union and the Red Cross, that uses data science, USSD and SMS technologies to connect rural merchants with on-demand transportation to periurban markets in Africa.
 
