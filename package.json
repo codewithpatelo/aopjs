@@ -1,0 +1,59 @@
+{
+  "name": "aopjs",
+  "version": "0.0.1",
+  "description": "More than a billion of the rural merchants in the developing world commonly depend on hiring on-demand transportation services to commute people or goods to markets. The process of selecting the most-optimal fare involves handling decision-making characterised with multiple alternatives, competing criteria and incomplete or even inconsistent information. Decision support systems are commonly used to solve these types of problems. However, (A) most widely used systems are based on object-based approaches which lack high-level abstractions to effectively handle human-machine interaction and (B) those systems ignore to compute the degree in which information is uncertain or inconsistent. In recent years, neutrosophic logic, caught certain momentum in decision science literature to handle that type of information, but scientific research failed in integrating this logic into decisional agent systems. This paper proposes the foundations for a neutrosophic agent-based decision-support approach to overcome those challenges. As a proof of concept, we built an agent that, given a request, takes a dataset of a neutrosophic stratified sample of 104 Ethiopian commuter criteria preferences taken from the Dukem region and a dataset of fare alternatives. The agent computes those datasets using widely used HPA and TOPSIS algorithms to weight, score, rank those alternatives and returns a confidence-scored actionable recommendation to the merchant who made the request. This preliminary system proves to handle this particular problem in a functional manner. Further research should be conducted to assess applications in different fields.",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "nyc mocha",
+    "lint": "eslint --ignore-path .eslintignore .",
+    "lint-fix": "eslint --ignore-path .eslintignore . -- --fix",
+    "cover": "nyc mocha && nyc report --reporter=text-lcov | coveralls",
+    "report-cover": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "precommit": [
+    "lint",
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patelotech/aopjs.git"
+  },
+  "keywords": [
+    "agent-oriented programming",
+    "agents",
+    "agent-oriented",
+    "multi-agent",
+    "ethiopia",
+    "africa",
+    "mobility",
+    "decision-making",
+    "decision",
+    "prescriptive analytics",
+    "operations research",
+    "decision science",
+    "analytics"
+  ],
+  "author": "Patricio J. Gerpe",
+  "license": "gpl-3.0",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^13.1.0"
+  },
+  "dependencies": {
+    "aopifyjs": "^0.1.5",
+    "moment": "^2.23.0",
+    "topsis": "^1.2.11",
+    "uuid-v4": "^0.1.0"
+  }
+}
