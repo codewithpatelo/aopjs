@@ -51,6 +51,7 @@
     "nyc": "^13.1.0"
   },
   "dependencies": {
+    "ahp-lite": "^1.2.1",
     "aopifyjs": "^0.1.5",
     "moment": "^2.23.0",
     "topsis": "^1.2.11",
