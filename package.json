@@ -53,6 +53,8 @@
   "dependencies": {
     "ahp-lite": "^1.2.1",
     "aopifyjs": "^0.1.5",
+    "csvtojson": "^2.0.8",
+    "matrixa": "^0.5.2",
     "moment": "^2.23.0",
     "topsis": "^1.2.11",
     "uuid-v4": "^0.1.0"
