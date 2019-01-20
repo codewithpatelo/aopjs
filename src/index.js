@@ -107,22 +107,30 @@ csv()
 
     */
 
-
+ // When the agent receives a fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
     ai.on('request', () => {
-      const msg = ai.decide('topsis', data);
-      console.log(`AGENT: The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.`);
+      const res = ai.decide('topsis', data);
+      let msg = `AGENT: The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.`;
+      console.log(msg);
+      ai.tell({ name: 'request' }, human);
+      
     });
-
+    
 
     // The human sends his/her request...
     human.tell({ name: 'request' }, ai);
 
     /*
-
-
     // Human responds to agent's recommendation...
     human.listen({ name: 'response' }, human, () => {
       console.log('HUMAN: Thanks agent you have helped me a lot!!');
     });
    */
+   
+   // Human responds to agent's recommendation...
+   human.on('response', () => {
+      console.log('HUMAN: Thanks agent you have helped me a lot!!');
+      
+    });
+   
   });
