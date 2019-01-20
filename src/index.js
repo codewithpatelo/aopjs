@@ -20,6 +20,8 @@ const m = new Matrix([
   [25, 10, 1],
 ]);
 
+const ia = ['max', 'min', 'min'];
+
 let w = [];
 
 
@@ -37,7 +39,6 @@ csv()
     return cma;
   })
   .then((cma) => {
-      
     const results = [];
     // We calculate the eigenvector for each matrix
     for (let i = 0; i < cma.length; i += 1) {
@@ -49,43 +50,56 @@ csv()
   .then((results) => {
     const wa = [];
 
+
     // We check which assessment was a consistent judgement.
     for (i = 0; i < cma.length; i += 1) {
       if (results[i].cr > 0.20) {
-        wa.push(results[i].w);
+        wa.push(results[i].ev);
       }
     }
-
     return wa;
   })
   .then((wa) => {
+    let mat = {};
+    w = new Matrix([[1, 1, 1]]);
+
     // We sintetize judgement using geometric mean.
     for (i = 0; i < wa.length; i += 1) {
-      w *= wa;
+      mat = new Matrix(wa[i]);
+      w = w.mul(mat);
     }
 
+    const newData = [];
 
-    //w = Math.pow(w, 1/wa);
-    console.log(w);
+
+    // We do the nth root as final step of the geometric mean.
+    for (i = 0; i < w.data[0].length; i += 1) {
+      let newValue = Math.pow(w.data[0][i], 1 / wa.length);
+      newValue = Math.round(newValue * 100) / 100;
+      newData.push(newValue);
+    }
+
+    w = newData;
+
     return w;
+  })
+  .then((w) => {
+    // We are all ready to set-up our agent environment !
+
+    const ai = new Agent('ai');
+    const human = new Agent('human');
+
+
+    ai.start();
+    human.start();
+
+
+    console.log(topsis.getBest(m, w, ia));
   });
 
 
-
-
-
-const ia = ['max', 'min', 'min'];
 // let arguments = {'m': m, 'w': w, 'ia' : ia};
 
-
-
-const ai = new Agent('ai');
-const human = new Agent('human');
-
-// console.log(ai);
-
-ai.start();
-human.start();
 
 /*
 
