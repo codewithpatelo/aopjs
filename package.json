@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "ahp-lite": "^1.2.1",
-    "aopifyjs": "^0.1.5",
+    "aopifyjs": "^0.1.6",
     "csvtojson": "^2.0.8",
     "matrixa": "^1.0.0",
     "moment": "^2.23.0",

@@ -9,6 +9,15 @@ const ahp = require('ahp-lite');
 const csv = require('csvtojson');
 const convert = require('matrixa');
 
+// We are all ready to set-up our agent environment !
+
+const ai = new Agent('ai');
+const human = new Agent('human');
+
+
+ai.start();
+human.start();
+
 
 // This is the matrix that contains the alternatives of drivers available.
 const m = new Matrix([
@@ -84,47 +93,25 @@ csv()
     return w;
   })
   .then((w) => {
-    // We are all ready to set-up our agent environment !
-
-    const ai = new Agent('ai');
-    const human = new Agent('human');
-
-
-    ai.start();
-    human.start();
-
-
-    console.log(topsis.getBest(m, w, ia));
+    const data = { m, w, ia };
+    // This is the data that will be further used as arguments of TOPSIS algorithm
+    return data;
   });
 
-
-// let arguments = {'m': m, 'w': w, 'ia' : ia};
-
-
-/*
-
+// When the agent receives fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
 ai.listen({ name: 'request' }, human, () => {
+  const msg = ai.decide('topsis', data);
+  ai.tell({ name: 'response', msg: `The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.` }, human);
+});
 
-  topsis.getBest(m, w, ia);
+// The human sends his/her request...
+human.tell({ name: 'request' }, ai);
 
-
-  //ai.decide(topsis, arguments);
-
-  ai.tell({ name: 'response', msg: 'The best fare for you is this one. The rating is '+msg[2]+' stars. You will reach location in around '+msg[1]+' minutes and the cost is '+msg[0]+' birrs.' }, human);
-
-  });
-
-
-human.tell({ name: 'request'}, ai);}
-
-ai.listen({ name: 'request' }, human, () => {
-
-    console.log('Response succesful. The agent has helped the human!');
-
-    });
+// Human responds to agent's recommendation...
+human.listen({ name: 'response' }, human, () => {
+  console.log('Thanks agent you have helped me a lot!!');
+});
 
 
 ai.kill();
 human.kill();
-
-*/
