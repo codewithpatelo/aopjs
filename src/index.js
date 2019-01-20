@@ -113,11 +113,12 @@ csv()
       console.log(`AGENT: The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.`);
     });
 
-    ai.emit('request');
 
-    /*
     // The human sends his/her request...
     human.tell({ name: 'request' }, ai);
+
+    /*
+
 
     // Human responds to agent's recommendation...
     human.listen({ name: 'response' }, human, () => {
