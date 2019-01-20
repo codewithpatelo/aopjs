@@ -15,10 +15,6 @@ const ai = new Agent('ai');
 const human = new Agent('human');
 
 
-ai.start();
-human.start();
-
-
 // This is the matrix that contains the alternatives of drivers available.
 const m = new Matrix([
   [2, 5, 5],
@@ -96,22 +92,36 @@ csv()
     const data = { m, w, ia };
     // This is the data that will be further used as arguments of TOPSIS algorithm
     return data;
+  })
+  .then((data) => {
+    ai.start();
+    human.start();
+
+    /*
+
+    // When the agent receives a fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
+    ai.listen({ name: 'request' }, human, () => {
+      const msg = ai.decide('topsis', data);
+      ai.tell({ name: 'response', msg: `AGENT: The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.` }, human);
+    });
+
+    */
+
+
+    ai.on('request', () => {
+      const msg = ai.decide('topsis', data);
+      console.log(`AGENT: The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.`);
+    });
+
+    ai.emit('request');
+
+    /*
+    // The human sends his/her request...
+    human.tell({ name: 'request' }, ai);
+
+    // Human responds to agent's recommendation...
+    human.listen({ name: 'response' }, human, () => {
+      console.log('HUMAN: Thanks agent you have helped me a lot!!');
+    });
+   */
   });
-
-// When the agent receives fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
-ai.listen({ name: 'request' }, human, () => {
-  const msg = ai.decide('topsis', data);
-  ai.tell({ name: 'response', msg: `The best fare for you is this one. The rating is ${msg[2]} stars. You will reach location in around ${msg[1]} minutes and the cost is ${msg[0]} birrs.` }, human);
-});
-
-// The human sends his/her request...
-human.tell({ name: 'request' }, ai);
-
-// Human responds to agent's recommendation...
-human.listen({ name: 'response' }, human, () => {
-  console.log('Thanks agent you have helped me a lot!!');
-});
-
-
-ai.kill();
-human.kill();
