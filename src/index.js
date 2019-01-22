@@ -102,13 +102,12 @@ csv()
       ai.tell({ name: 'response' }, human);
     });
 
-    // The human sends his/her request...
-    console.log('HUMAN: I need to find a ride to market!');
-    human.tell({ name: 'request' }, ai);
-
-
     // Human responds to agent's recommendation...
     human.on('response', () => {
       console.log('HUMAN: Thanks agent you have helped me a lot!!');
     });
+
+    // The human sends his/her request...
+    console.log('HUMAN: I need to find a ride to market!');
+    human.tell({ name: 'request' }, ai);
   });
