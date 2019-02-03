@@ -40,21 +40,20 @@ const csvFilePath = './src/cm.csv';
 csv()
   .fromFile(csvFilePath)
   .then((jsonObj) => {
-          
     ai.start();
     human.start();
-    
-  // Convert it into a usable matrix array.
+
+    // Convert it into a usable matrix array.
     cma = convert.toMatrixArray(jsonObj, 'linear-algebra');
     return cma;
   })
   .then((cma) => {
-    let results = [];
+    const results = [];
     // We calculate the eigenvector for each matrix
     for (let i = 0; i < cma.length; i += 1) {
-      let c = cma[i];
-     
-      let assessment = ai.decide('ahp', c);
+      const c = cma[i];
+
+      const assessment = ai.decide('ahp', c);
       results.push(assessment);
     }
 
@@ -92,37 +91,28 @@ csv()
     }
 
     w = newData;
+    console.log(w);
     const data = { m, w, ia };
     // This is the data that will be further used as arguments of TOPSIS algorithm
 
     return data;
   })
   .then((data) => {
-      
-      
-      
-
     // When the agent receives a fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
     ai.on('request', (msg) => {
       const res = ai.decide('topsis', data);
-      ai.store(msg,'request',human.id, ai.id);
-      
+      ai.store(msg, 'request', human.id, ai.id);
+
       msg = `AGENT: The best fare for you is this one. The rating is ${res[2]} stars. You will reach location in around ${res[1]} minutes and the cost is ${res[0]} birrs.`;
-      
-      ai.tell({ name: 'response', msg:msg }, human);
-      
+
+      ai.tell({ name: 'response', msg }, human);
+
       console.log(ai);
-  
     });
 
 
     // The human sends his/her request...
-    msg = 'HUMAN: I need to find a ride to market!'
+    msg = 'HUMAN: I need to find a ride to market!';
     console.log(msg);
-    human.tell({ name: 'request', msg: msg }, ai);
-    
-    
-    
-    
-    
+    human.tell({ name: 'request', msg }, ai);
   });
