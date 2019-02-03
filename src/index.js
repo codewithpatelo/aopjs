@@ -16,16 +16,17 @@ const human = new Agent('human');
 
 
 // This is the matrix that contains the alternatives of drivers available.
+
 const m = new Matrix([
   [2, 5, 5],
   [60, 26, 4],
   [20, 20, 4],
-  [500, 2, 4],
+  [500, 9, 4],
   [50, 23, 3],
   [25, 10, 1],
 ]);
 
-const ia = ['max', 'min', 'min'];
+const ia = ['min', 'min', 'max'];
 
 let w = [];
 
@@ -39,15 +40,22 @@ const csvFilePath = './src/cm.csv';
 csv()
   .fromFile(csvFilePath)
   .then((jsonObj) => {
+          
+    ai.start();
+    human.start();
+    
   // Convert it into a usable matrix array.
     cma = convert.toMatrixArray(jsonObj, 'linear-algebra');
     return cma;
   })
   .then((cma) => {
-    const results = [];
+    let results = [];
     // We calculate the eigenvector for each matrix
     for (let i = 0; i < cma.length; i += 1) {
-      results.push(ahp.getWeights(cma[i]));
+      let c = cma[i];
+     
+      let assessment = ai.decide('ahp', c);
+      results.push(assessment);
     }
 
     return results;
@@ -76,7 +84,6 @@ csv()
 
     const newData = [];
 
-
     // We do the nth root as final step of the geometric mean.
     for (i = 0; i < w.data[0].length; i += 1) {
       let newValue = Math.pow(w.data[0][i], 1 / wa.length);
@@ -91,23 +98,31 @@ csv()
     return data;
   })
   .then((data) => {
-    ai.start();
-    human.start();
+      
+      
+      
 
     // When the agent receives a fare request from human, the agent uses TOPSIS algorithm to recommend the best fare.
-    ai.on('request', () => {
+    ai.on('request', (msg) => {
       const res = ai.decide('topsis', data);
-      const msg = `AGENT: The best fare for you is this one. The rating is ${res[2]} stars. You will reach location in around ${res[1]} minutes and the cost is ${res[0]} birrs.`;
-      console.log(msg);
-      ai.tell({ name: 'response' }, human);
+      ai.store(msg,'request',human.id, ai.id);
+      
+      msg = `AGENT: The best fare for you is this one. The rating is ${res[2]} stars. You will reach location in around ${res[1]} minutes and the cost is ${res[0]} birrs.`;
+      
+      ai.tell({ name: 'response', msg:msg }, human);
+      
+      console.log(ai);
+  
     });
 
-    // Human responds to agent's recommendation...
-    human.on('response', () => {
-      console.log('HUMAN: Thanks agent you have helped me a lot!!');
-    });
 
     // The human sends his/her request...
-    console.log('HUMAN: I need to find a ride to market!');
-    human.tell({ name: 'request' }, ai);
+    msg = 'HUMAN: I need to find a ride to market!'
+    console.log(msg);
+    human.tell({ name: 'request', msg: msg }, ai);
+    
+    
+    
+    
+    
   });
