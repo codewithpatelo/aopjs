@@ -75,7 +75,7 @@ csv()
     let mat = {};
     w = new Matrix([[1, 1, 1]]);
 
-    // We sintetize judgement using geometric mean.
+    // We synthesize judgement using geometric mean.
     for (i = 0; i < wa.length; i += 1) {
       mat = new Matrix(wa[i]);
       w = w.mul(mat);

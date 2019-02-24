@@ -1,7 +1,9 @@
 # Modelling decision-making with intelligent agents to assist rural commuters in developing nations.
 [![Build Status](https://travis-ci.org/patelotech/aopjs.svg?branch=master)](https://travis-ci.org/patelotech/aopjs)
 [![license](https://img.shields.io/badge/license-GNUv3-blue.svg)](https://github.com/patelotech/aopifyjs/blob/master/LICENSE.md) 
-Patricio Julián Gerpe. Evangelos Markopoulos
+Patricio Julián Gerpe. Evangelos Markopoulos.
+
+<a href="https://www.patreon.com/join/patelotech?" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" > </a>
 
 <img src="./readme.png" > 
 
